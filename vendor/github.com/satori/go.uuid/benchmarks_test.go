@@ -59,6 +59,14 @@ func BenchmarkNewV1(b *testing.B) {
 	}
 }
 
+func BenchmarkNewV1Parallel(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			NewV1()
+		}
+	})
+}
+
 func BenchmarkNewV2(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		NewV2(DomainPerson)
@@ -81,6 +89,14 @@ func BenchmarkNewV5(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		NewV5(NamespaceDNS, "www.example.com")
 	}
+}
+
+func BenchmarkNewV5Parallel(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			NewV5(NamespaceDNS, "www.example.com")
+		}
+	})
 }
 
 func BenchmarkMarshalBinary(b *testing.B) {
